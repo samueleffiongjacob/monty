@@ -1,13 +1,15 @@
-#ifndef MONTY_H
-#define MONTY_H
-#include <string.h>
-#include <stdarg.h>
+#ifndef __HOOLB__
+#define __HOOLB__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/syscall.h>
+#include <string.h>
 
-extern int push_arg;
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -15,14 +17,13 @@ extern int push_arg;
  * @next: points to the next element of the stack (or queue)
  *
  * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO
+ * for stack, queues, LIFO, FIFO Holberton project
  */
-
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -31,31 +32,27 @@ typedef struct stack_s
  * @f: function to handle the opcode
  *
  * Description: opcode and its function
- * for stack, queues, LIFO, FIFO
+ * for stack, queues, LIFO, FIFO Holberton project
  */
-
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_num);
 } instruction_t;
 
-typedef struct global_variable
-{
-	FILE *file;
-	char *buffer;
-	int push_arg;
-} global_var;
+void pint(stack_t **stack, unsigned int line_num);
+void free_stack(stack_t *head);
+int pushint(char *list, int ln);
+int _strcmp(char *opcode, char *list);
+void add(stack_t **stack, unsigned int line_num);
+void swap(stack_t **stack, unsigned int line_num);
+void pop(stack_t **stack, unsigned int line_num);
+void push(stack_t **stack, unsigned int line_number, int n);
+void pall(stack_t **stack, unsigned int line_num);
+void execute(char *string[], stack_t *stack);
+int nlfind(char *list);
+void free_list(char *a[]);
+int combfind(char *list, int ln);
 
-extern global_var var_global;
 
-char *parse_line(char *buffer, unsigned int line_num);
-void read_file(char *file, stack_t **stack);
-int get_op_func(char *str, stack_t **stack, int line_number);
-int isnum(char *str);
-void _push(stack_t **stack, unsigned int line_number);
-void _pall(stack_t **stack, unsigned int line_number);
-void _pint(stack_t **stack, unsigned int line_number);
-void _pop(stack_t **stack, unsigned int line_number);
-void free_dlistint(stack_t *head);
 #endif
