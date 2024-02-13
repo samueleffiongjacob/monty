@@ -80,6 +80,7 @@ void execute(char *string[], stack_t *stack);
 int nlfind(char *list);
 void free_list(char *a[]);
 int combfind(char *list, int ln);
+int get_op_func(char *str, stack_t **stack, int line_number)
 
 
 #endif
