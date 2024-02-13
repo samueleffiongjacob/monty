@@ -1,17 +1,12 @@
-#ifndef __monty__
-#define __monty__
+#ifndef __MONTY__H__
+#define __MONTY__H__
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/syscall.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <ctype.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -20,7 +15,7 @@
  * @next: points to the next element of the stack (or queue)
  *
  * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO Alx project
+ * for stack, queues, LIFO, FIFO
  */
 typedef struct stack_s
 {
@@ -35,52 +30,44 @@ typedef struct stack_s
  * @f: function to handle the opcode
  *
  * Description: opcode and its function
- * for stack, queues, LIFO, FIFO Alx project
+ * for stack, queues, LIFO, FIFO
  */
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_num);
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
- * struct info_s - info to access
- * @monty_file: file
- * @line: line
- * @stack: stack
- * @line_number: line number
- * @queue_status: off by default
- * Description: global struct with info
+ * struct fclose_s - structure to close a file
+ * @file: file
+ * @tmp: strdup buffer
+ * @opcode: a command
+ *
+ * Description: a structure meant
+ * to close a file
  */
- typedef struct info_s
+typedef struct fclose_s
 {
-	FILE *monty_file;
-	char *line;
-	stack_t *stack;
-	unsigned int line_number;
-	_Bool queue_status;
-} info_t;
+	FILE *file;
+	char *tmp;
+	char *opcode;
+} fclose_t;
 
-extern info_t info;
+extern fclose_t _close;
 
-void pint(stack_t **stack, unsigned int line_num);
-void free_stack(stack_t *head);
-void garbage_collection(void);
-void validate_and_open(int argc, char *argv);
-void read_lines(void);
-void init_info(void);
-int pushint(char *list, int ln);
-int _strcmp(char *opcode, char *list);
-void add(stack_t **stack, unsigned int line_num);
-void swap(stack_t **stack, unsigned int line_num);
-void pop(stack_t **stack, unsigned int line_num);
-void push(stack_t **stack, unsigned int line_number, int n);
-void pall(stack_t **stack, unsigned int line_num);
-void execute(char *string[], stack_t *stack);
-int nlfind(char *list);
-void free_list(char *a[]);
-int combfind(char *list, int ln);
-int get_op_func(char *str, stack_t **stack, int line_number)
-
+void tokenize(stack_t **stack, instruction_t instructions[],
+		int line_number, char *line, FILE *file);
+int convert_if_int(stack_t **stack, char *tmp,
+		char *second_argument, int number, FILE *file);
+void free_stack(stack_t *stack);
+void get_opcode(stack_t **stack, instruction_t instruction[], FILE *file);
+void push(stack_t **stack, unsigned int number);
+void pall(stack_t **stack, unsigned int number);
+void pint(stack_t **stack, unsigned int number);
+void pop(stack_t **stack, unsigned int number);
+void nop(stack_t **stack, unsigned int number);
+void swap(stack_t **stack, unsigned int number);
+void add(stack_t **stack, unsigned int number);
 
 #endif

@@ -1,125 +1,38 @@
 #include "monty.h"
-
+fclose_t _close = {NULL, NULL, NULL};
 /**
- * pall - Print all values on the stack
- * @stack: pointer to head of stack
- * @line_num: file's line number
- * Return: Void
+ * main - a programm who implement the push and pall opcodes
+ * @argc: the number of argument
+ * @argv: the arguments
+ * Return: Always 0 (Success)
  */
-
-void pall(stack_t **stack, unsigned int line_num)
+int main(int argc, char *argv[])
 {
-	stack_t *h = *stack;
-	(void)line_num;
+	FILE *file;
+	const char *file_from;
+	stack_t *stack = NULL;
+	instruction_t instructions[] = {
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"nop", nop},
+		{"swap", swap},
+		{"add", add},
+		{NULL, NULL}};
 
-	while (h)
+	if (argc != 2)
+		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
+	file_from = argv[1];
+	file = fopen(file_from, "r");
+	if (file == NULL)
 	{
-		printf("%d\n", h->n);
-		h = h->next;
-	}
-}
-
-/**
- * push - Pushes an element to the stack
- * @stack: pointer to head of stack
- * @line_num: file's line number
- * @n: variable
- * Return: address of new element
- */
-
-void push(stack_t **stack, unsigned int line_num, int n)
-{
-	stack_t *new, *h = *stack;
-
-	if (stack == NULL)
-	{
-		fprintf(stderr, "L%d: usage: push integer", line_num);
-		garbage_collection();
+		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
-	new = malloc(sizeof(stack_t));
-	if (new == NULL)
-		fprintf(STDERR_FILENO, "Error: malloc failed\n");
-		garbage_collection();
-		exit(EXIT_FAILURE);
-	new->prev = NULL;
-	new->n = n;
-	new->next = *stack;
-	if (*stack)
-		h->prev = new;
-	*stack = new;
-}
-
-/**
- * pop - Removes the top element of the stack
- * @stack: pointer to head of stack
- * @line_num: file's line number
- * Return: Void
- */
-
-void pop(stack_t **stack, unsigned int line_num)
-{
-	stack_t *h = *stack;
-
-	if (!(*stack))
-	{
-		fprintf(stderr, "L%u: can't pop an empty stack\n", line_num);
-		garbage_collection();
-		exit(EXIT_FAILURE);
-	}
-
-
-	if (h)
-	{
-		*stack = (h)->next;
-		free(h);
-	}
-}
-
-/**
- * swap - Swaps the top two elements of the stack
- * @stack: pointer to head of stack
- * @line_num: file's line number
- * Return: Void
- */
-void swap(stack_t **stack, unsigned int line_num)
-{
-	stack_t *h = *stack, *ptr;
-
-	if ((*stack) == NULL || (*stack)->next == NULL)
-	{
-		fprintf(stderr, "L%u: can't swap, stack too short\n", line_num);
-		garbage_collection();
-		exit(EXIT_FAILURE);
-	}
-
-	if (h && h->next)
-	{
-		ptr = h->next;
-		if (ptr->next)
-			ptr->next->prev = h;
-		h->next = ptr->next;
-		ptr->prev = NULL;
-		ptr->next = h;
-		h->prev = ptr;
-		*stack = ptr;
-	}
-}
-
-/**
- * pint_list - prints top
- * @stack: head
- * @line_number: instruction
- */
-void pint_list(stack_t **stack, unsigned int line_number)
-{
-	stack_t *h = *stack;
-
-	if (!h)
-	{
-		fprintf(STDERR_FILENO, "L%u: can't pint, stack empty\n", line_number);
-		garbage_collection();
-		exit(EXIT_FAILURE);
-	}
-	printf("%d\n", current->n);
+	_close.file = file;
+	get_opcode(&stack, instructions, file);
+	fclose(file);
+	free_stack(stack);
+	return (0);
 }
