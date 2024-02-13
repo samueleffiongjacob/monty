@@ -124,3 +124,13 @@ void free_dlistint(stack_t *head)
 		head = tmp;
 	}
 }
+
+/**
+ * garbage_collection - frees all
+ */
+void garbage_collection(void)
+{
+	fclose(info.monty_file);
+	free(info.line);
+	free_stack(info.stack);
+}

@@ -34,10 +34,13 @@ void push(stack_t **stack, unsigned int line_num, int n)
 	if (stack == NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer", line_num);
+		garbage_collection();
 		exit(EXIT_FAILURE);
 	}
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
+		fprintf(STDERR_FILENO, "Error: malloc failed\n");
+		garbage_collection();
 		exit(EXIT_FAILURE);
 	new->prev = NULL;
 	new->n = n;
@@ -61,6 +64,7 @@ void pop(stack_t **stack, unsigned int line_num)
 	if (!(*stack))
 	{
 		fprintf(stderr, "L%u: can't pop an empty stack\n", line_num);
+		garbage_collection();
 		exit(EXIT_FAILURE);
 	}
 
@@ -85,6 +89,7 @@ void swap(stack_t **stack, unsigned int line_num)
 	if ((*stack) == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%u: can't swap, stack too short\n", line_num);
+		garbage_collection();
 		exit(EXIT_FAILURE);
 	}
 
@@ -99,4 +104,22 @@ void swap(stack_t **stack, unsigned int line_num)
 		h->prev = ptr;
 		*stack = ptr;
 	}
+}
+
+/**
+ * pint_list - prints top
+ * @stack: head
+ * @line_number: instruction
+ */
+void pint_list(stack_t **stack, unsigned int line_number)
+{
+	stack_t *h = *stack;
+
+	if (!h)
+	{
+		fprintf(STDERR_FILENO, "L%u: can't pint, stack empty\n", line_number);
+		garbage_collection();
+		exit(EXIT_FAILURE);
+	}
+	printf("%d\n", current->n);
 }

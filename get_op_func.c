@@ -23,3 +23,4 @@ int get_op_func(char *str, stack_t **stack, int line_number)
 	return (1);
 
 }
+

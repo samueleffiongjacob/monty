@@ -1,9 +1,12 @@
-#ifndef __HOOLB__
-#define __HOOLB__
+#ifndef __monty__
+#define __monty__
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -17,7 +20,7 @@
  * @next: points to the next element of the stack (or queue)
  *
  * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO Holberton project
+ * for stack, queues, LIFO, FIFO Alx project
  */
 typedef struct stack_s
 {
@@ -32,7 +35,7 @@ typedef struct stack_s
  * @f: function to handle the opcode
  *
  * Description: opcode and its function
- * for stack, queues, LIFO, FIFO Holberton project
+ * for stack, queues, LIFO, FIFO Alx project
  */
 typedef struct instruction_s
 {
@@ -40,8 +43,32 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_num);
 } instruction_t;
 
+/**
+ * struct info_s - info to access
+ * @monty_file: file
+ * @line: line
+ * @stack: stack
+ * @line_number: line number
+ * @queue_status: off by default
+ * Description: global struct with info
+ */
+ typedef struct info_s
+{
+	FILE *monty_file;
+	char *line;
+	stack_t *stack;
+	unsigned int line_number;
+	_Bool queue_status;
+} info_t;
+
+extern info_t info;
+
 void pint(stack_t **stack, unsigned int line_num);
 void free_stack(stack_t *head);
+void garbage_collection(void);
+void validate_and_open(int argc, char *argv);
+void read_lines(void);
+void init_info(void);
 int pushint(char *list, int ln);
 int _strcmp(char *opcode, char *list);
 void add(stack_t **stack, unsigned int line_num);
