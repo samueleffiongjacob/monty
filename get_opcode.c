@@ -10,7 +10,7 @@
  */
 
 void tokenize(stack_t **stack, instruction_t instructions[],
-		int line_number, char *line, FILE *file)
+		int line_number, char *line, FILE *file, char *strdup(const char *s);)
 {
 	int i = 0, number = 0;
 	char *token, *tmp;
@@ -61,7 +61,7 @@ void tokenize(stack_t **stack, instruction_t instructions[],
  * @file: file to read
  */
 
-void get_opcode(stack_t **stack, instruction_t instructions[], FILE *file)
+void get_opcode(stack_t **stack, instruction_t instructions[], FILE *file, char *strdup(const char *s))
 {
 	int line_number = 1;
 	char line[1024], *tmp1, *tmp2;
