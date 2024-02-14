@@ -66,6 +66,7 @@ void get_opcode(stack_t **stack, instruction_t instructions[], FILE *file)
 {
 	int line_number = 1;
 	char line[1024], *tmp1, *tmp2;
+	char *strdup(const char *s);
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
