@@ -57,7 +57,7 @@ typedef struct fclose_s
 extern fclose_t _close;
 
 void tokenize(stack_t **stack, instruction_t instructions[],
-		int line_number, char *line, FILE *file ,char *strdup(const char *s));
+		int line_number, char *line, FILE *file);
 int convert_if_int(stack_t **stack, char *tmp,
 		char *second_argument, int number, FILE *file);
 void free_stack(stack_t *stack);
