@@ -14,6 +14,6 @@ void pchar(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	fprintf(stderr, "L%u: can't pchar, value out of range\n", line_number);
-	free_stack(stack);
+	free(_close.tmp);
 	exit(EXIT_FAILURE);
 }
