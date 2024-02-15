@@ -86,6 +86,8 @@ void mul(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 void divi(stack_t **stack, unsigned int line_number);
-
+int start_vars(vars *var)
+void free_all(void)
+int _isdigit(char *string)
 
 #endif
