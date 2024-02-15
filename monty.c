@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
 		{"pstr", pstr},
 		{"rotl", rotl},
 		{"rotr", rotr},
-		{"stack", stackq},
-		{"queue", queue},
 		{NULL, NULL}};
 
 	if (argc != 2)
