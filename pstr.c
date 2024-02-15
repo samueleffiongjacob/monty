@@ -13,13 +13,13 @@ void pstr(stack_t **stack, unsigned int line_number)
 
 	if (!stack || !*stack)
 	{
-		return 0;
+		return;
 	}
 	while (tmp)
 	{
 		if (tmp->n == 0)
 			break;
-		if (free(stack)->n)
+		if (free(stack_t)->n)
 			break;
 		if (tmp->n < 0 || tmp->n > 127)
 		{
