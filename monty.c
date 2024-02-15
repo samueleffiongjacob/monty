@@ -2,6 +2,8 @@
 fclose_t _close = {NULL, NULL, NULL};
 /**
  * main - a programm who implement the push and pall opcodes
+ * pint, pop, swap, add, nop, sub, div, mul, mod, pchar, pstr
+ * rotl, rotr
  * @argc: the number of argument
  * @argv: the arguments
  * Return: Always 0 (Success)
@@ -19,6 +21,16 @@ int main(int argc, char *argv[])
 		{"nop", nop},
 		{"swap", swap},
 		{"add", add},
+		{"sub", sub},
+		{"div", divi},
+		{"mul", mul},
+		{"mod", mod},
+		{"pchar", pchar},
+		{"pstr", pstr},
+		{"rotl", rotl},
+		{"rotr", rotr},
+		{"stack", stack_mode},
+		{"queue", queue_mode},
 		{NULL, NULL}};
 
 	if (argc != 2)

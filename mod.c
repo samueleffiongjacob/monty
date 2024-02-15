@@ -7,19 +7,20 @@
  */
 void mod(stack_t **stack, unsigned int line_number)
 {
-	if (!*stack || !(*stack)->next)
+	stack_t *tmp1;
+	int module = 0;
+
+	if (*stack == NULL || ((*stack)->prev == NULL && (*stack)->next == NULL))
 	{
-		fprintf(stderr, "L%u: can't mod, stack too short\n",
-			line_number);
-		free_all();
+		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
+		free_stack(*stack);
+		fclose(_close.file);
+		free(_close.tmp);
 		exit(EXIT_FAILURE);
 	}
-	if ((*stack)->n == 0)
-	{
-		fprintf(stderr, "L%u: division by zero\n", line_number);
-		free_all();
-		exit(EXIT_FAILURE);
-	}
-	(*stack)->next->n = (*stack)->next->n % (*stack)->n;
-	pop(stack, line_number);
+	tmp1 = *stack;
+	module = tmp1->n % tmp1->next->n;
+	tmp1->next->n = module;
+	*stack = tmp1->next;
+	free(tmp1);
 }
