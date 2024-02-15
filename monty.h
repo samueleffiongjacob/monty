@@ -6,7 +6,13 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <errno.h>
+#include <fcntl.h>
 #include <ctype.h>
+#define Buffsize 30
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -80,5 +86,6 @@ void mul(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 void divi(stack_t **stack, unsigned int line_number);
+void free_all(void);
 
 #endif
