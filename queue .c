@@ -5,7 +5,7 @@
  */
 void queue(stack_t **stack, unsigned int line_number)
 {
-	stack_t;
+	void(stack_t);
 	(void) line_number;
 
 	_close.tmp = "queue";
